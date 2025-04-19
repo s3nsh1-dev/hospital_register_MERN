@@ -113,6 +113,8 @@ npm run dev
 ```
 PORT=5000
 MONGO_URI=mongodb+srv://<username>:<password>@cluster0.mongodb.net/hospital
+or
+Local Server
 ```
 
 ---
