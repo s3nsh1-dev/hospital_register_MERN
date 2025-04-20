@@ -1,0 +1,28 @@
+import express from "express";
+import cors from "cors";
+import dotenv from "dotenv";
+import { Request, Response, RequestHandler } from "express";
+import connectDB from "./src/config/connectDB";
+import patientRouter from "./src/routes/patient.routes";
+
+dotenv.config();
+const app = express();
+const port = process.env.SERVER_PORT || 4000;
+
+const startServer = async () => {
+  try {
+    await connectDB();
+
+    app.use(cors());
+    app.use(express.json());
+    app.use("/api/patient", patientRouter);
+
+    app.listen(port, () => {
+      console.log(`Server: http://localhost:${port}`);
+    });
+  } catch (error) {
+    console.error(`Server Error <500>: ${error}`);
+    process.exit(1);
+  }
+};
+startServer();
