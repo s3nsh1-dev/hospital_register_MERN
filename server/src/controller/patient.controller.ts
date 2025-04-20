@@ -1,6 +1,7 @@
 import { RequestHandler, Request, Response } from "express";
 import Patient from "../models/patient.model";
 import { PatientType } from "../constants/commonTypes";
+import mongoose from "mongoose";
 
 export const fetchPatients: RequestHandler = async (
   req: Request,
@@ -28,7 +29,7 @@ export const addPatient: RequestHandler = async (
 ) => {
   try {
     const newPatient: PatientType = {
-      id: crypto.randomUUID(),
+      //   _id: crypto.randomUUID(),
       ...req.body,
     };
     if (!newPatient.name || !newPatient.age) {
@@ -51,14 +52,20 @@ export const deletePatient: RequestHandler = async (
   res: Response
 ) => {
   try {
-    const { id } = req.body;
-    if (!id) {
-      res.status(400).json({ message: `Id(${id}) does not exist` });
+    const { _id } = req.body;
+    if (!_id) {
+      res.status(400).json({ message: `Id(${_id}) does not exist` });
       return;
     }
-    const deleted = await Patient.findOneAndDelete({ id });
+    if (!mongoose.Types.ObjectId.isValid(_id)) {
+      res.status(400).json({ message: "Invalid MongoDB ObjectId format" });
+      return;
+    }
+    const deleted = await Patient.findOneAndDelete({
+      _id: new mongoose.Types.ObjectId(_id as string),
+    });
     if (!deleted) {
-      res.status(404).json({ message: `Patient with ID(${id}) not found` });
+      res.status(404).json({ message: `Patient with ID(${_id}) not found` });
       return;
     }
     res.status(200).json({ message: "Patient Deleted", body: deleted });

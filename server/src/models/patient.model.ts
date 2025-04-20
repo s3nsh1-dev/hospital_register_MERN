@@ -5,10 +5,6 @@ import { PatientType } from "../constants/commonTypes";
 dotenv.config();
 
 const model = {
-  id: {
-    type: String,
-    required: true,
-  },
   name: {
     type: String,
     required: true,

@@ -1,5 +1,4 @@
 export type ActivePatientType = {
-  id: string;
   name: string;
   age: number;
   disease: string[];
