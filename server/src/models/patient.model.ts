@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import { PatientType } from "../constants/commonTypes";
+import MedicalTest from "./medicalTests.model";
 
 dotenv.config();
 
