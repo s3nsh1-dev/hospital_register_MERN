@@ -26,6 +26,10 @@ const model = {
   dischargeDate: {
     type: Date,
   },
+  tests: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "MedicalTest",
+  },
 };
 const patientSchema = new mongoose.Schema(model, { timestamps: true });
 

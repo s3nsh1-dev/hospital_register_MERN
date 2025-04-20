@@ -1,6 +1,7 @@
 import { RequestHandler, Request, Response } from "express";
 import Patient from "../models/patient.model";
 import { PatientType } from "../constants/commonTypes";
+import MedicalTest from "../models/medicalTests.model";
 import mongoose from "mongoose";
 
 export const fetchPatients: RequestHandler = async (
@@ -138,5 +139,40 @@ export const updatePatientUsername: RequestHandler = async (
     res.status(500).json({
       message: "Server Request Went wrong when updating patient name",
     });
+  }
+};
+
+export const addMedicalTestHistory: RequestHandler = async (
+  req: Request,
+  res: Response
+) => {
+  try {
+    const { _id, newMedicalTest } = req.body;
+    if (!_id || !newMedicalTest) {
+      res
+        .status(400)
+        .json({ message: "Either _id or newMedicalTest is missing" });
+      return;
+    }
+
+    // Update the patient, adding the created test id to the tests field
+    const updatedPatient = await Patient.findByIdAndUpdate(
+      _id,
+      { $push: { tests: newMedicalTest } },
+      { new: true, runValidators: true }
+    );
+
+    if (!updatedPatient) {
+      res.status(404).json({ message: "Patient not found" });
+      return;
+    }
+
+    res
+      .status(200)
+      .json({ message: "Medical test added", body: updatedPatient });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Server error while adding Medical Test", error });
   }
 };
