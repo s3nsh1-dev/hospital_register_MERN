@@ -14,7 +14,7 @@ patientRouter.get("/", fetchPatients);
 patientRouter.post("/add", addPatient);
 patientRouter.delete("/delete", deletePatient);
 patientRouter.put("/update", updatePatient);
-patientRouter.put("/addTest", addMedicalTestHistory);
+patientRouter.post("/addTest", addMedicalTestHistory);
 patientRouter.patch("/patch", updatePatientUsername);
 
 export default patientRouter;

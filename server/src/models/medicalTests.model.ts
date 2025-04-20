@@ -4,17 +4,28 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const model = {
-  name: String,
-  isFasting: Boolean,
-  isDiabetic: Boolean,
-  patientId: [String],
+  name: {
+    type: String,
+    required: true,
+  },
+  isFasting: {
+    type: Boolean,
+    required: true,
+    default: false,
+  },
+  isDiabetic: {
+    type: Boolean,
+    required: true,
+    default: false,
+  },
 };
 
-const medialTestSchema = new mongoose.Schema(model, { timestamps: true });
+const medicalTestSchema = new mongoose.Schema(model, { timestamps: true });
 
 const MedicalTest = mongoose.model(
   "MedicalTest",
-  medialTestSchema,
+  medicalTestSchema,
   process.env.TEST_COLLECTION
 );
+
 export default MedicalTest;

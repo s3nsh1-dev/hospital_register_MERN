@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import { PatientType } from "../constants/commonTypes";
-import MedicalTest from "./medicalTests.model";
 
 dotenv.config();
 
@@ -31,9 +30,14 @@ const model = {
     ref: "MedicalTest",
   },
 };
+
 const patientSchema = new mongoose.Schema(model, { timestamps: true });
 
-// const Patient = mongoose.model("Patient", patientSchema);
+// Add auto-population middleware
+patientSchema.pre(["find", "findOne"], function () {
+  this.populate("tests");
+});
+
 const Patient = mongoose.model<PatientType>(
   "Patient",
   patientSchema,

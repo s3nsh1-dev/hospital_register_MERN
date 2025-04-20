@@ -155,21 +155,30 @@ export const addMedicalTestHistory: RequestHandler = async (
       return;
     }
 
-    // Update the patient, adding the created test id to the tests field
+    // Create the new medical test
+    const createdTest = await MedicalTest.create(newMedicalTest);
+
+    // Update the patient with the new test's ID
     const updatedPatient = await Patient.findByIdAndUpdate(
       _id,
-      { $push: { tests: newMedicalTest } },
-      { new: true, runValidators: true }
-    );
+      { tests: createdTest._id },
+      {
+        new: true,
+        runValidators: true,
+      }
+    ).populate("tests");
 
     if (!updatedPatient) {
+      // If patient not found, delete the created test to maintain data consistency
+      await MedicalTest.findByIdAndDelete(createdTest._id);
       res.status(404).json({ message: "Patient not found" });
       return;
     }
 
-    res
-      .status(200)
-      .json({ message: "Medical test added", body: updatedPatient });
+    res.status(200).json({
+      message: "Medical test added",
+      body: updatedPatient,
+    });
   } catch (error) {
     res
       .status(500)
