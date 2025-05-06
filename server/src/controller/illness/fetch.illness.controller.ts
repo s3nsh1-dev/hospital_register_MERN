@@ -8,6 +8,7 @@ const fetchIllness: RequestHandler = async (req: Request, res: Response) => {
     const illnessList: IllnessType[] = await Illness.find({});
     if (!illnessList) {
       res.status(404).json({ message: "Patient Not Found" });
+      return;
     }
     res
       .status(200)

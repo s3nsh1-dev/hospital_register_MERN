@@ -4,9 +4,7 @@ import { PatientType } from "../../constants/commonTypes";
 
 const addPatient: RequestHandler = async (req: Request, res: Response) => {
   try {
-    const newPatient: PatientType = {
-      ...req.body,
-    };
+    const newPatient: PatientType = { ...req.body };
     if (!newPatient.name || !newPatient.age) {
       res
         .status(422)
