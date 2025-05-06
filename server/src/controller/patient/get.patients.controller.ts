@@ -1,12 +1,13 @@
 import { RequestHandler, Response, Request } from "express";
-import Patient from "../models/patient.model";
-import { PatientType } from "../constants/commonTypes";
+import Patient from "../../models/patient.model";
+import { PatientType } from "../../constants/commonTypes";
 
 const fetchPatients: RequestHandler = async (req: Request, res: Response) => {
+  // This will result in an unhandled promise rejection
   const patientList: PatientType[] = await Patient.find({});
   try {
     if (!patientList) {
-      res.status(400).json({ message: "Patient not found" });
+      res.status(404).json({ message: "Patient not found" });
       return;
     }
     res

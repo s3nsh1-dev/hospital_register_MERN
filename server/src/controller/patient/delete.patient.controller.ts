@@ -1,6 +1,6 @@
 import { RequestHandler, Request, Response } from "express";
 import mongoose from "mongoose";
-import Patient from "../models/patient.model";
+import Patient from "../../models/patient.model";
 
 const deletePatient: RequestHandler = async (req: Request, res: Response) => {
   try {
