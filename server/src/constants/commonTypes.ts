@@ -1,10 +1,14 @@
-export type ActivePatientType = {
+export type DischargedPatientType = {
   name: string;
   age: number;
-  disease: string[];
-  entryDate: Date;
-  dischargeDate: Date;
+  discharge_date: Date;
+  illness_id: number;
 };
-export type PreviousPatientType = Omit<ActivePatientType, "dischargeDate">;
+export type ActivePatientType = Omit<DischargedPatientType, "dischargeDate">;
+export type PatientType = ActivePatientType | DischargedPatientType;
 
-export type PatientType = ActivePatientType | PreviousPatientType;
+export type IllnessType = {
+  id: number;
+  type: string[];
+  patient: { name: string; id: number };
+};
