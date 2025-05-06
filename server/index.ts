@@ -16,6 +16,9 @@ const startServer = async () => {
     app.use(cors());
     app.use(express.json());
     app.use("/api/patient", patientRouter);
+    app.use("/", (res, req) => {
+      req.send("HOME");
+    });
 
     app.listen(port, () => {
       console.log(`Server: http://localhost:${port}`);
