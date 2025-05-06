@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import dotenv from "dotenv";
+import { StoryType } from "../../src/constants/commonTypes";
 
 dotenv.config();
 
@@ -17,12 +18,12 @@ const model = {
   },
 };
 
-const story_model_schema = new mongoose.Schema(model, { timestamps: true });
+const story_model_schema = new mongoose.Schema(model);
 
-const Story = mongoose.model(
+const Story = mongoose.model<StoryType>(
   "Story",
   story_model_schema,
-  process.env.STORY_COLLECTION
+  process.env.STORY_DATASET
 );
 
 export default Story;

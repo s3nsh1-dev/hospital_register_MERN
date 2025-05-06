@@ -8,35 +8,27 @@ const model = {
   name: {
     type: String,
     required: true,
+    default: "NEW PATIENT",
   },
   age: {
     type: Number,
     required: true,
   },
-  disease: {
-    type: [String],
-    required: true,
-    default: ["Viral"],
+  discharge_date: {
+    type: Date,
   },
-  entryDate: {
+  illness_id: {
     type: Date,
     required: true,
   },
-  dischargeDate: {
-    type: Date,
-  },
-  tests: {
+  story: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "MedicalTest",
+    ref: "Story",
+    required: true,
   },
 };
 
 const patientSchema = new mongoose.Schema(model, { timestamps: true });
-
-// Add auto-population middleware
-patientSchema.pre(["find", "findOne"], function () {
-  this.populate("tests");
-});
 
 const Patient = mongoose.model<PatientType>(
   "Patient",
