@@ -1,20 +1,25 @@
 import { RequestHandler, Request, Response } from "express";
 import { IllnessType } from "../../constants/commonTypes";
 import Illness from "../../models/illness.model";
+
 const addIllness: RequestHandler = async (req: Request, res: Response) => {
   try {
     // this form of taking request body insures that TS will check its type is illness or not, else throw error
-    const result = { ...req.body };
-    if (!result) {
-      res.status(404).json({ message: "new Illness not found" });
+    const result: IllnessType = { id: crypto.randomUUID(), ...req.body };
+    // Validate required fields
+    if (
+      !result.patient_info ||
+      !result.patient_info.name ||
+      !result.patient_info.id
+    ) {
+      res.status(422).json({
+        message: "Invalid Illness data: Missing required patient_info fields",
+      });
       return;
     }
-    const createStory: IllnessType = await Illness.create(result);
-    if (!createStory) {
-      res.status(400).json({ message: "Can not post Illness" });
-      return;
-    }
-    res.status(201).json({ message: "Illness Posted", body: createStory });
+
+    const createIllness: IllnessType = await Illness.create(result);
+    res.status(201).json({ message: "SUCCESS", body: createIllness });
   } catch (error) {
     res
       .status(500)
@@ -23,3 +28,14 @@ const addIllness: RequestHandler = async (req: Request, res: Response) => {
 };
 
 export default addIllness;
+/*
+SAMPLE
+POST /api/illness/add
+{
+  "type": ["Diabetes", "Hypertension"],
+  "patient_info": {
+    "name": "John Doe",
+    "id": "12345"
+  }
+}
+*/

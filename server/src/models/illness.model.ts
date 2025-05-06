@@ -8,6 +8,7 @@ const model = {
   id: {
     type: String,
     required: true,
+    unique: true,
   },
   type: {
     type: [String],
@@ -15,12 +16,21 @@ const model = {
     required: true,
   },
   patient_info: {
-    type: { name: String, id: String },
-    required: true,
+    name: {
+      type: String,
+      required: true,
+    },
+    id: {
+      type: String,
+      required: true,
+    },
   },
 };
 
-const IllnessModelSchema = new mongoose.Schema(model, { timestamps: true });
+const IllnessModelSchema = new mongoose.Schema(model, {
+  _id: false,
+  timestamps: true,
+});
 
 const Illness = mongoose.model<IllnessType>(
   "Illness",
