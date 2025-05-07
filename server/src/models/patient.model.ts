@@ -4,15 +4,12 @@ import { PatientType } from "../constants/commonTypes";
 
 dotenv.config();
 
-const patientSchema = new mongoose.Schema(
-  {
-    name: { type: String, required: true },
-    age: { type: Number, required: true },
-    illnesses: [{ type: mongoose.Schema.Types.ObjectId, ref: "Illness" }],
-    story: { type: mongoose.Schema.Types.ObjectId, ref: "Story" },
-  },
-  { timestamps: true }
-);
+const patientSchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  age: { type: Number, required: true },
+  illnesses: [{ type: mongoose.Schema.Types.ObjectId, ref: "Illness" }],
+  story: { type: mongoose.Schema.Types.ObjectId, ref: "Story" },
+});
 
 const Patient = mongoose.model<PatientType>(
   "Patient",

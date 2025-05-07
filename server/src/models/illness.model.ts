@@ -12,7 +12,7 @@ const illnessSchema = new mongoose.Schema(
       required: true,
     },
   },
-  { timestamps: true }
+  { timestamps: true, _id: false }
 );
 
 const Illness = mongoose.model(
