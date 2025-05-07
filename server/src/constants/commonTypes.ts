@@ -4,7 +4,7 @@ export type DischargedPatientType = {
   name: string;
   age: number;
   discharge_date: Date;
-  illness_id: string;
+  illness: mongoose.Types.ObjectId | IllnessType;
   story: mongoose.Types.ObjectId | StoryType;
 };
 export type ActivePatientType = Omit<DischargedPatientType, "dischargeDate">;
@@ -13,7 +13,6 @@ export type PatientType = ActivePatientType | DischargedPatientType;
 export type IllnessType = {
   id: string;
   type: string[];
-  patient_info: { name: string; id: string };
 };
 
 export type StoryType = {

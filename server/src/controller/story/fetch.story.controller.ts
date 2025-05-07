@@ -4,7 +4,7 @@ import Story from "../../models/story.model";
 const fetchStory: RequestHandler = async (req: Request, res: Response) => {
   try {
     const stories = await Story.find({});
-    if (!stories || stories.length === 0) {
+    if (!stories) {
       res.status(404).json({ message: "No stories found" });
       return;
     }
