@@ -5,12 +5,12 @@ dotenv.config();
 
 const illnessSchema = new mongoose.Schema(
   {
-    type: { type: [String], required: true },
-    patient: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Patient",
+    id: {
+      type: String,
       required: true,
+      unique: true,
     },
+    type: { type: [String], required: true, default: ["Pain"] },
   },
   { timestamps: true, _id: false }
 );

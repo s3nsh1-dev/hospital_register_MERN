@@ -5,9 +5,12 @@ dotenv.config();
 
 const storySchema = new mongoose.Schema({
   summary: { type: String, required: true },
-  patient: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Patient",
+  fir_filed: {
+    type: Boolean,
+    required: true,
+  },
+  insurance_covered: {
+    type: Boolean,
     required: true,
   },
 });

@@ -7,6 +7,10 @@ dotenv.config();
 const patientSchema = new mongoose.Schema({
   name: { type: String, required: true },
   age: { type: Number, required: true },
+  discharge_date: {
+    type: String,
+    unique: true,
+  },
   illnesses: [{ type: mongoose.Schema.Types.ObjectId, ref: "Illness" }],
   story: { type: mongoose.Schema.Types.ObjectId, ref: "Story" },
 });
