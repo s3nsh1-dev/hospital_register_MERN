@@ -17,7 +17,7 @@ const patientSchema = new mongoose.Schema(
 const Patient = mongoose.model<PatientType>(
   "Patient",
   patientSchema,
-  process.env.COLLECTION_NAME
+  process.env.PATIENT_DATASET
 );
 
 export default Patient;

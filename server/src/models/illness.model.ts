@@ -15,5 +15,9 @@ const illnessSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const Illness = mongoose.model("Illness", illnessSchema);
+const Illness = mongoose.model(
+  "Illness",
+  illnessSchema,
+  process.env.ILLNESS_DATASET
+);
 export default Illness;

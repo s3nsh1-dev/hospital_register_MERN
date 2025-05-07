@@ -15,5 +15,5 @@ const storySchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const Story = mongoose.model("Story", storySchema);
+const Story = mongoose.model("Story", storySchema, process.env.STORY_DATASET);
 export default Story;
