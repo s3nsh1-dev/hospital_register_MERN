@@ -1,29 +1,19 @@
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import { StoryType } from "../../src/constants/commonTypes";
 
 dotenv.config();
 
-const model = {
-  summary: String,
-  fir_filed: {
-    type: Boolean,
-    required: true,
-    default: false,
+const storySchema = new mongoose.Schema(
+  {
+    summary: { type: String, required: true },
+    patient: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Patient",
+      required: true,
+    },
   },
-  insurance_covered: {
-    type: Boolean,
-    required: true,
-    default: true,
-  },
-};
-
-const story_model_schema = new mongoose.Schema(model);
-
-const Story = mongoose.model<StoryType>(
-  "Story",
-  story_model_schema,
-  process.env.STORY_DATASET
+  { timestamps: true }
 );
 
+const Story = mongoose.model("Story", storySchema);
 export default Story;
